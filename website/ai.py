@@ -61,10 +61,10 @@ def WriteBook(topic, chapters, points):
 
     book = ''
 
-    book += f'<h1 id="h">{outline['title']}</h1><br><h3>{outline['description']}</h3>'
+    book += f'<h1 id="h">{outline["title"]}</h1><br><h3>{outline["description"]}</h3>'
     for chapter in outline['chapters']:
-        book += f'<br><h2 id="h">{chapter['topic']}</h2>'
+        book += f'<br><h2 id="h">{chapter["topic"]}</h2>'
         for topic in chapter['sub-topics']:
-            book += f'<br><h3 id="h">{topic['topic']}</h3><br><p>{topic['content'].replace('\n\n', '<br><br>')}</p>'
+            book += f'<br><h3 id="h">{topic["topic"]}</h3><br><p>{topic["content"].replace("\n\n", "<br><br>")}</p>'
 
     return book
