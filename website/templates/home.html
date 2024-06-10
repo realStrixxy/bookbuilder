@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}Home{% endblock %}
+{% block content %}
+<div class="holder">
+    <form method="POST" id="form">
+        <h3>Book Settings</h3>
+        <div class="form">
+            <label for="topic">What is your book about?</label>
+            <input type="text" name="topic" id="topic" placeholder="What is your book about?" required>
+            <br>
+            <label for="chapters">How many chapters?</label>
+            <select name="chapters" id="chapters">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+                <option value="6">6</option>
+                <option value="7">7</option>
+                <option value="8">8</option>
+                <option value="9">9</option>
+                <option value="10">10</option>
+            </select>
+            <br>
+            <label for="topics">How many topics per chapter?</label>
+            <select name="topics" id="topics">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="4">4</option>
+                <option value="5">5</option>
+            </select>
+            <br>
+            <button type="submit" id="button">Write my book!</button>
+        </div>
+    </form>
+</div>
+{% endblock %}

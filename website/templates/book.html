@@ -1,0 +1,7 @@
+{% extends "base.html" %}
+{% block title %}Your Book{% endblock %}
+{% block content %}
+<div class="book">
+    {{ book|safe }}
+</div>
+{% endblock %}
