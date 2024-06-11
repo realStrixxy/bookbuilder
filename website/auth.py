@@ -32,7 +32,7 @@ def signup():
         elif len(password) > 20:
             flash('Password too long.', 'error')
         else:
-            newUser = User(name=name, username=username, password=generate_password_hash(password, method='scrypt'), email=email)
+            newUser = User(name=name, username=username, password=generate_password_hash(password, method='scrypt'), email=email, misc='{}')
             db.session.add(newUser)
             db.session.commit()
             login_user(newUser, remember=True)
