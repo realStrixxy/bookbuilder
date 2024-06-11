@@ -47,7 +47,7 @@ nav #logo {
     transform: translate(-50%, -50%);
 }
 
-#form {
+#form, #gayform {
     border: var(--10) 2px solid;
     border-radius: 12px;
     padding: 1%;
@@ -100,4 +100,34 @@ nav #logo {
 
 .book #h {
     color: var(--10);
+}
+
+.alertred {
+    background-color: red;
+}
+
+.alertgreen {
+    background-color: rgb(64, 188, 64);
+}
+
+.alertgreen, .alertred {
+    border-radius: 12px;
+    margin: 10px;
+    padding: 10px;
+    color: white;
+}
+
+.alertgreen button, .alertred button {
+    float: right;
+    overflow: hidden;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: white;
+    height: auto;
+    background-repeat: no-repeat;
+}
+
+#gayform {
+    padding: 30px;
 }

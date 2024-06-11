@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block title %}Sign Up{% endblock %}
+{% block content %}
+<div class="holder">
+    <form method="post" id="gayform">
+        <label for="name">Name</label>
+        <br>
+        <input type="text" name="name" id="name" required>
+        <br>
+        <label for="username">Username</label>
+        <br>
+        <input type="text" name="username" id="username" required>
+        <br>
+        <label for="email">Email</label>
+        <br>
+        <input type="email" name="email" id="email" required>
+        <br>
+        <label for="password">Password</label>
+        <br>
+        <input type="password" name="password" id="password" required>
+        <br><br>
+        <button type="submit" id="button">Sign Up</button>
+    </form>
+</div>
+{% endblock %}
