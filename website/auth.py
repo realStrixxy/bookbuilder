@@ -25,7 +25,7 @@ def signup():
             flash('Username too long.', 'error')
         elif len(email) < 4:
             flash('Email too short.', 'error')
-        elif len(email) > 20:
+        elif len(email) > 150:
             flash('Email too long.', 'error')
         elif len(password) < 4:
             flash('Password too short.', 'error')
