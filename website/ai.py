@@ -7,22 +7,28 @@ client = OpenAI(api_key=API_KEY)
 
 model = 'gpt-3.5-turbo-0125'
 
-def chat(prompt):
+def chat(systemMsg, prompt):
+    if systemMsg == '':
+        systemMsg = 'You are an author with immense knowledge on a variety of topics.'
+
     response = client.chat.completions.create(
         model = model,
         messages = [
-            {'role': 'system', 'content': 'You are an author with immense knowledge on a variety of topics.'},
+            {'role': 'system', 'content': systemMsg},
             {'role': 'user', 'content': prompt}
         ]
     )
 
     return response.choices[0].message.content
 
-def chatWithContext(ogPrompt, aiOutline, newPrompt):
+def chatWithContext(systemMsg, ogPrompt, aiOutline, newPrompt):
+    if systemMsg == '':
+        systemMsg = 'You are an author with immense knowledge on a variety of topics.'
+
     response = client.chat.completions.create(
         model = model,
         messages = [
-            {'role': 'system', 'content': 'You are an author with immense knowledge on a variety of topics.'},
+            {'role': 'system', 'content': systemMsg},
             {'role': 'user', 'content': str(ogPrompt)},
             {'role': 'assistant', 'content': str(aiOutline)},
             {'role': 'user', 'content': str(newPrompt)}
@@ -47,17 +53,17 @@ jsonTemplate = {
     ]
 }
 
-def WriteBook(topic, chapters, points):
+def WriteBook(systemMsg, topic, chapters, points):
     # topic = input('What is your book topic?: ')
     # chapters = int(input('How many chapters will your book have?: '))
     # points = int(input('How many topics will be discussed each chapter?: '))
     prompt = f"Write me an outline for a book. This book will be about {topic}. It will have {str(chapters)} chapters, with each chapter having {str(points)} sub-sections. You will format your response in JSON as follows: {str(jsonTemplate)}"
 
-    outline = json.loads(chat(prompt))
+    outline = json.loads(chat(prompt, systemMsg))
 
     for chapter in outline['chapters']:
         for topic in chapter['sub-topics']:
-            topic['content'] = chatWithContext(prompt, outline, f'Please write me the content for the sub-topic of: {topic}. DO NOT TITLE THE SUB-TOPIC, ONLY WRITE THE CONTENT!')
+            topic['content'] = chatWithContext(systemMsg, prompt, outline, f'Please write me the content for the sub-topic of: {topic}. DO NOT TITLE THE SUB-TOPIC, ONLY WRITE THE CONTENT!')
 
     book = ''
 

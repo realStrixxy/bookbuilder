@@ -15,8 +15,11 @@ def signup():
         password = request.form.get('password')
 
         user = User.query.filter_by(username=username).first()
+        user2 = User.query.filter_by(email=email).first()
         if user:
-            flash('User already exists.', category='error')
+            flash('Username already exists.', category='error')
+        if user2:
+            flash('Email already exists.', category='error')
         elif len(name) > 100:
             flash('Name too long.', 'error')
         elif len(username) < 4:
@@ -25,8 +28,6 @@ def signup():
             flash('Username too long.', 'error')
         elif len(email) < 4:
             flash('Email too short.', 'error')
-        elif len(email) > 150:
-            flash('Email too long.', 'error')
         elif len(password) < 4:
             flash('Password too short.', 'error')
         elif len(password) > 20:
@@ -56,7 +57,7 @@ def login():
             else:
                 flash('Incorrect password.', 'error')
         else:
-            flash('Incorrect username.', 'error')
+            flash('User does not exist.', 'error')
 
     return render_template('login.html', user=current_user)
 
