@@ -32,6 +32,10 @@
             </select>
             <br>
             <button type="submit" id="button">Write my book!</button>
+            {% if book %}
+            <br>
+            <h3>Please do <b>not</b> refresh! Book generation may take a while.</h3>
+            {% endif %}
         </div>
     </form>
 </div>
