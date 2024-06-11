@@ -16,7 +16,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(100))
     username = db.Column(db.String(20), unique=True)
     email = db.Column(db.String(150), unique=True)
-    password = db.Column(db.String(20))
+    password = db.Column(db.String(1000))
     joinedDate = db.Column(db.DateTime(timezone=True), default=func.now())
     book = db.relationship('Book')
     misc = db.Column(db.String(1000000))
