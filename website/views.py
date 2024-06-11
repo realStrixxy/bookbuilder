@@ -5,13 +5,16 @@ views = Blueprint('views', __name__)
 
 @views.route('/', methods=['GET', 'POST'])
 def home():
+    if request.method == ['GET']:
+        book = False
     if request.method == "POST":
+        book = True
         topic = request.form.get('topic')
         chapters = request.form.get('chapters')
         topics = request.form.get('topics')
         return redirect(f'/book?topic={topic}&chapters={chapters}&topics={topics}')
 
-    return render_template('home.html')
+    return render_template('home.html', book=book)
 
 @views.route('/book', methods=['GET'])
 def book():
