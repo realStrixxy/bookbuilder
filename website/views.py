@@ -5,6 +5,7 @@ views = Blueprint('views', __name__)
 
 @views.route('/', methods=['GET', 'POST'])
 def home():
+    book = False
     if request.method == ['GET']:
         book = False
     if request.method == "POST":
