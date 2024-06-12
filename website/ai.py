@@ -76,6 +76,6 @@ def WriteBook(systemMsg, topic, chapters, points):
                 topic['content'] = topic['content'].replace("\n\n", "<br><br>")
                 book += f'<br><h3 id="h">{topic["topic"]}</h3><br><p>{topic["content"]}</p>'
 
-        return book
+        return [book, True]
     except:
-        return outline
+        return [outline, False]
