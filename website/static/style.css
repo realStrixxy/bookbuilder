@@ -27,6 +27,8 @@ nav a {
     align-items: center;
     justify-content: center;
     width: 20%;
+    text-decoration: none;
+    color: black;
 }
 
 nav #logo {

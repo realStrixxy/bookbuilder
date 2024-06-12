@@ -35,7 +35,7 @@ def chatWithContext(systemMsg, ogPrompt, aiOutline, newPrompt):
         ]
     )
 
-    return response.choices[0].message.content, response
+    return response.choices[0].message.content
 
 jsonTemplate = {
     "title": "the book title",
@@ -59,10 +59,10 @@ def WriteBook(systemMsg, topic, chapters, points):
     # points = int(input('How many topics will be discussed each chapter?: '))
     prompt = f"Write me an outline for a book. This book will be about {topic}. It will have {str(chapters)} chapters, with each chapter having {str(points)} sub-sections. You will format your response in JSON as follows: {str(jsonTemplate)}"
 
-    response = chat(prompt, systemMsg)
-    outline = response[0]
-
     try:
+        response = chat(prompt, systemMsg)
+        outline = json.loads(response[0])
+
         for chapter in outline['chapters']:
             for topic in chapter['sub-topics']:
                 topic['content'] = chatWithContext(systemMsg, prompt, outline, f'Please write me the content for the sub-topic of: {topic}. DO NOT TITLE THE SUB-TOPIC, ONLY WRITE THE CONTENT!')
@@ -73,9 +73,9 @@ def WriteBook(systemMsg, topic, chapters, points):
         for chapter in outline['chapters']:
             book += f'<br><h2 id="h">{chapter["topic"]}</h2>'
             for topic in chapter['sub-topics']:
+                print(topic['content'])
                 topic['content'] = topic['content'].replace("\n\n", "<br><br>")
                 book += f'<br><h3 id="h">{topic["topic"]}</h3><br><p>{topic["content"]}</p>'
-
-        return [book, True]
+        return [book, True, outline['title']]
     except:
         return ['This website uses the ChatGPT API to build your books from the ground up. If your request is inappropriate or any other errors come up within the generation process, you will see this page.', False]

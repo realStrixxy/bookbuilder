@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, flash, url_for, redirect, session
 from . import ai
-from .models import User
+from .models import User, Book
 from . import db
 from flask_login import login_required, current_user
 
@@ -32,6 +32,10 @@ def book():
         flash("Unable to generate response.", 'error')
     elif book[1] == True:
         flash("Successfully generated.", 'success')
+        newBook = Book(user_id=current_user.id, title=book[2], data=book[0], misc='{}')
+        db.session.add(newBook)
+        db.session.commit()
+
     return render_template('book.html', book=book[0], user=current_user) 
 
 @views.route('/profile', methods=['GET'])
