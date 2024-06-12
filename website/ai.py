@@ -78,4 +78,4 @@ def WriteBook(systemMsg, topic, chapters, points):
 
         return [book, True]
     except:
-        return [outline, False]
+        return ['This website uses the ChatGPT API to build your books from the ground up. If your request is inappropriate or any other errors come up within the generation process, you will see this page.', False]
