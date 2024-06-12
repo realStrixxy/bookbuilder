@@ -13,6 +13,8 @@ def signup():
         username = request.form.get('username')
         email = request.form.get('email')
         password = request.form.get('password')
+        apikey = request.form.get('apikey')
+        model = request.form.get('models')
 
         user = User.query.filter_by(username=username).first()
         user2 = User.query.filter_by(email=email).first()
@@ -33,7 +35,7 @@ def signup():
         elif len(password) > 20:
             flash('Password too long.', 'error')
         else:
-            newUser = User(name=name, username=username, password=generate_password_hash(password, method='scrypt'), email=email, misc='{}')
+            newUser = User(name=name, username=username, password=generate_password_hash(password, method='scrypt'), email=email, misc=str({"api-key": apikey, "model": model}))
             db.session.add(newUser)
             db.session.commit()
             login_user(newUser, remember=True)

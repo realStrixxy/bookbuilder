@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, request, flash, url_for, redirect, session
 from sqlalchemy import and_
 from . import ai
-import json
+import json, yaml
 from .models import User, Book
 from . import db
 from flask_login import login_required, current_user
@@ -36,7 +36,9 @@ def book():
 
         return render_template('book.html', book=book1.data, yes=True, user=current_user) 
     else:
-        book = ai.WriteBook(session['sys'], session['topic'], int(session['chapters']), int(session['topics']))
+        misc = yaml.load(current_user.misc, Loader=yaml.Loader)
+        ai1 = ai.AI(misc['api-key'], misc['model'])
+        book = ai1.WriteBook(session['sys'], session['topic'], int(session['chapters']), int(session['topics']))
         if book[1] == False:
             flash("Unable to generate response.", 'error')
         elif book[1] == True:

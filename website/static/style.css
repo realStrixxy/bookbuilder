@@ -142,3 +142,7 @@ nav #logo {
 #titlesbook {
     color: var(--10);
 }
+
+#models {
+    padding: 5px;
+}
