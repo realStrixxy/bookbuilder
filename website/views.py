@@ -49,10 +49,18 @@ def book():
 
         return render_template('book.html', book=book[0], yes=False, user=current_user) 
 
-@views.route('/profile', methods=['GET'])
+@views.route('/profile', methods=['GET', 'POST'])
 @login_required
 def profile():
-    return render_template('profile.html', user=current_user)
+    misc = yaml.load(current_user.misc, Loader=yaml.Loader)
+
+    if request.method == 'POST':
+        misc['api-key'] = request.form.get('apikey')
+        misc['model'] = request.form.get('models')
+        current_user.misc = str(misc)
+        db.session.commit()
+        
+    return render_template('profile.html', user=current_user, apikey=misc['api-key'], model=misc['model'])
 
 @views.route('/delete-book', methods=['GET'])
 @login_required

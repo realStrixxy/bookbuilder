@@ -2,6 +2,26 @@
 {% block title %}Profile{% endblock %}
 {% block content %}
 <div class="holder" id="form">
+    <h1 id="titlesbook">Your Info</h1>
+    <form method="post">
+        <label for="apikey">API Key</label>
+        <br>
+        <input type="text" name="apikey" id="topic" value="{{ apikey }}" required>
+        <br>
+        <label for="models">ChatGPT Model</label>
+        <br>
+        <select name="models" id="models">
+            <option value="gpt-4o" {% if model == 'gpt-4o' %}selected{% endif %}>gpt-4o</option>
+            <option value="gpt-4-turbo" {% if model == "gpt-4-turbo" %}selected{% endif %}>gpt-4-turbo</option>
+            <option value="gpt-4-turbo-2024-04-09" {% if model == "gpt-4-turbo-2024-04-09" %}selected{% endif %}>gpt-4-turbo-2024-04-09</option>
+            <option value="gpt-4-0613" {% if model == "gpt-4-0613" %}selected{% endif %}>gpt-4-0613</option>
+            <option value="gpt-3.5-turbo-0125" {% if model == "gpt-3.5-turbo-0125" %}selected{% endif %}>gpt-3.5-turbo-0125</option>
+            <option value="gpt-3.5-turbo-1106" {% if model == "gpt-3.5-turbo-1106" %}selected{% endif %}>gpt-3.5-turbo-1106</option>
+        </select>
+        <br><br>
+        <button type="submit" id="button">Save Info</button>
+    </form>
+    <br>
     <h1 id="titlesbook">Your Books</h1><br>
     {% for book in user.book %}
     <a href="/book?id={{book.id}}" id="titlebook">{{ book.title }}</a><br>
