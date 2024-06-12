@@ -19,7 +19,7 @@ def chat(systemMsg, prompt):
         ]
     )
 
-    return response.choices[0].message.content
+    return [response.choices[0].message.content, response]
 
 def chatWithContext(systemMsg, ogPrompt, aiOutline, newPrompt):
     if systemMsg == '':
@@ -35,7 +35,7 @@ def chatWithContext(systemMsg, ogPrompt, aiOutline, newPrompt):
         ]
     )
 
-    return response.choices[0].message.content
+    return response.choices[0].message.content, response
 
 jsonTemplate = {
     "title": "the book title",
@@ -59,7 +59,11 @@ def WriteBook(systemMsg, topic, chapters, points):
     # points = int(input('How many topics will be discussed each chapter?: '))
     prompt = f"Write me an outline for a book. This book will be about {topic}. It will have {str(chapters)} chapters, with each chapter having {str(points)} sub-sections. You will format your response in JSON as follows: {str(jsonTemplate)}"
 
-    outline = json.loads(chat(prompt, systemMsg))
+    response = chat(prompt, systemMsg)
+    outline = response[0]
+
+    if outline == "I'm sorry, I can't assist with that request.":
+        return 'error'
 
     for chapter in outline['chapters']:
         for topic in chapter['sub-topics']:

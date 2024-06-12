@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, flash, url_for, redirect
+from flask import Blueprint, render_template, request, flash, url_for, redirect, session
 from . import ai
 from .models import User
 from . import db
@@ -14,18 +14,25 @@ def reroute():
 @login_required
 def home():
     if request.method == "POST":
-        sys = request.form.get('sys')
-        topic = request.form.get('topic')
-        chapters = request.form.get('chapters')
-        topics = request.form.get('topics')
-        return redirect(f'/book?sys={sys.replace(" ", "%20")}&topic={topic.replace(" ", "%20")}&chapters={chapters}&topics={topics}')
+        session.clear()
+        session['sys'] = request.form.get('sys')
+        session['topic'] = request.form.get('topic')
+        session['chapters'] = request.form.get('chapters')
+        session['topics'] = request.form.get('topics')
+
+        return redirect(url_for('views.book'))
 
     return render_template('home.html', user=current_user)
 
 @views.route('/book', methods=['GET'])
 @login_required
 def book():
-    bookInfo = request.args.to_dict()
-    book = ai.WriteBook(bookInfo['sys'], bookInfo['topic'], int(bookInfo['chapters']), int(bookInfo['topics']))
-
+    book = ai.WriteBook(session['sys'], session['topic'], int(session['chapters']), int(session['topics']))
+    if book == 'error':
+        flash("ChatGPT does not like your system message or request.", 'error')
     return render_template('book.html', book=book, user=current_user) 
+
+@views.route('/profile', methods=['GET'])
+@login_required
+def profile():
+    return render_template('profile.html', user=current_user)
