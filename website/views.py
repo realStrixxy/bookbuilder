@@ -28,8 +28,10 @@ def home():
 @login_required
 def book():
     book = ai.WriteBook(session['sys'], session['topic'], int(session['chapters']), int(session['topics']))
-    if book == 'error':
-        flash("ChatGPT does not like your system message or request.", 'error')
+    if book[1] == False:
+        flash("Unable to generate response.", 'error')
+    elif book[1] == True:
+        flash("Successfully generated.", 'success')
     return render_template('book.html', book=book, user=current_user) 
 
 @views.route('/profile', methods=['GET'])
