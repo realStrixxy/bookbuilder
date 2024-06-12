@@ -133,3 +133,12 @@ nav #logo {
 #gayform {
     padding: 30px;
 }
+
+#titlebook {
+    text-decoration: none;
+    color: black;
+}
+
+#titlesbook {
+    color: var(--10);
+}

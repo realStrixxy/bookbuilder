@@ -3,5 +3,9 @@
 {% block content %}
 <div class="book">
     {{ book|safe }}
+    {% if yes %}
+    <br>
+    <button id="button" onclick="location.href = '/delete-book'">Delete Book</button>
+    {% endif %}
 </div>
 {% endblock %}

@@ -1,5 +1,10 @@
 {% extends "base.html" %}
 {% block title %}Profile{% endblock %}
 {% block content %}
-
+<div class="holder" id="form">
+    <h1 id="titlesbook">Your Books</h1><br>
+    {% for book in user.book %}
+    <a href="/book?id={{book.id}}" id="titlebook">{{ book.title }}</a><br>
+    {% endfor %}
+</div>
 {% endblock %}
