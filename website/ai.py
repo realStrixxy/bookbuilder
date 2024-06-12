@@ -62,20 +62,20 @@ def WriteBook(systemMsg, topic, chapters, points):
     response = chat(prompt, systemMsg)
     outline = response[0]
 
-    if outline == "I'm sorry, I can't assist with that request.":
-        return 'error'
+    try:
+        for chapter in outline['chapters']:
+            for topic in chapter['sub-topics']:
+                topic['content'] = chatWithContext(systemMsg, prompt, outline, f'Please write me the content for the sub-topic of: {topic}. DO NOT TITLE THE SUB-TOPIC, ONLY WRITE THE CONTENT!')
 
-    for chapter in outline['chapters']:
-        for topic in chapter['sub-topics']:
-            topic['content'] = chatWithContext(systemMsg, prompt, outline, f'Please write me the content for the sub-topic of: {topic}. DO NOT TITLE THE SUB-TOPIC, ONLY WRITE THE CONTENT!')
+        book = ''
 
-    book = ''
+        book += f'<h1 id="h">{outline["title"]}</h1><br><h3>{outline["description"]}</h3>'
+        for chapter in outline['chapters']:
+            book += f'<br><h2 id="h">{chapter["topic"]}</h2>'
+            for topic in chapter['sub-topics']:
+                topic['content'] = topic['content'].replace("\n\n", "<br><br>")
+                book += f'<br><h3 id="h">{topic["topic"]}</h3><br><p>{topic["content"]}</p>'
 
-    book += f'<h1 id="h">{outline["title"]}</h1><br><h3>{outline["description"]}</h3>'
-    for chapter in outline['chapters']:
-        book += f'<br><h2 id="h">{chapter["topic"]}</h2>'
-        for topic in chapter['sub-topics']:
-            topic['content'] = topic['content'].replace("\n\n", "<br><br>")
-            book += f'<br><h3 id="h">{topic["topic"]}</h3><br><p>{topic["content"]}</p>'
-
-    return book
+        return book
+    except:
+        return outline
